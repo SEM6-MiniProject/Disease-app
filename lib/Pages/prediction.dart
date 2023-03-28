@@ -1,33 +1,24 @@
+import 'dart:io';
+
+import 'package:diseaseapp/Model/prediction.dart';
 import 'package:flutter/material.dart';
 
 class PredictionPage extends StatefulWidget {
-  final String para1;
-  final String para2;
-  final String para3;
-  final String para4;
-  final String para5;
-  const PredictionPage(
-      {super.key,
-      required this.para1,
-      required this.para2,
-      required this.para3,
-      required this.para4,
-      required this.para5});
+  final File imageFile;
+  const PredictionPage({
+    super.key,
+    required this.imageFile,
+  });
 
   @override
   State<PredictionPage> createState() => _PredictionPageState();
 }
 
 class _PredictionPageState extends State<PredictionPage> {
-  bool isLoading = true;
-
-  @override
-  void initState() {
-    super.initState();
-    Future.delayed(const Duration(seconds: 5), () {
-      setState(() {
-        isLoading = false;
-      });
+  Future<PredictionModel> getPrediction() async {
+    return await Future.delayed(const Duration(seconds: 5), () {
+      return PredictionModel(
+          hasAnemia: "50", para1: "30", para2: "20", para3: "10");
     });
   }
 
@@ -37,7 +28,18 @@ class _PredictionPageState extends State<PredictionPage> {
       appBar: AppBar(
         title: const Text('Prediction'),
       ),
-      body: isLoading ? loadingScreen() : screen(),
+      body: FutureBuilder<PredictionModel>(
+        future: getPrediction(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return screen(snapshot.data!);
+          } else if (snapshot.hasError) {
+            return errorScreen();
+          } else {
+            return loadingScreen();
+          }
+        },
+      ),
     );
   }
 
@@ -47,15 +49,31 @@ class _PredictionPageState extends State<PredictionPage> {
     );
   }
 
-  Widget screen() {
+  Widget screen(PredictionModel pred) {
     return Column(
       children: [
-        Text(widget.para1),
-        Text(widget.para2),
-        Text(widget.para3),
-        Text(widget.para4),
-        Text(widget.para5),
+        SizedBox(
+          height: 300,
+          width: double.infinity,
+          child: Image.file(widget.imageFile),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        Text(
+          "Has Anemia: ${pred.hasAnemia} %",
+          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        Text("Para 1: ${pred.para1}"),
+        Text("Para 2: ${pred.para2}"),
+        Text("Para 3: ${pred.para3}"),
       ],
+    );
+  }
+
+  Widget errorScreen() {
+    return const Center(
+      child: Text("Error"),
     );
   }
 }

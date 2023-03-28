@@ -1,3 +1,4 @@
+import 'package:diseaseapp/Pages/uploadImage.dart';
 import 'package:flutter/material.dart';
 
 import 'Pages/home.dart';
