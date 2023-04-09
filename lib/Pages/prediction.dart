@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:diseaseapp/Model/prediction.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
 
 class PredictionPage extends StatefulWidget {
   final File imageFile;
@@ -18,6 +19,7 @@ class PredictionPage extends StatefulWidget {
 
 class _PredictionPageState extends State<PredictionPage> {
   Future<PredictionModel> getPrediction() async {
+    print("Getting Prediction");
     final url = Uri.parse("http://10.0.2.2:5000/predict_file");
     final req = http.MultipartRequest(
       'POST',
@@ -28,6 +30,7 @@ class _PredictionPageState extends State<PredictionPage> {
       "file",
       await File.fromUri(Uri.parse(widget.imageFile.path)).readAsBytes(),
       filename: originalName,
+      contentType: MediaType('image', 'jpeg'),
     );
     req.files.add(file);
     final response = await req.send();
