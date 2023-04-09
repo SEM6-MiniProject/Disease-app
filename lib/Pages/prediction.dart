@@ -20,7 +20,7 @@ class PredictionPage extends StatefulWidget {
 class _PredictionPageState extends State<PredictionPage> {
   Future<PredictionModel> getPrediction() async {
     print("Getting Prediction");
-    final url = Uri.parse("http://10.0.2.2:5000/predict_file");
+    final url = Uri.parse("https://animea-prediction.onrender.com/predict_file");
     final req = http.MultipartRequest(
       'POST',
       url,
