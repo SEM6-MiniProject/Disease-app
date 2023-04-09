@@ -1,7 +1,9 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:diseaseapp/Model/prediction.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class PredictionPage extends StatefulWidget {
   final File imageFile;
@@ -16,10 +18,30 @@ class PredictionPage extends StatefulWidget {
 
 class _PredictionPageState extends State<PredictionPage> {
   Future<PredictionModel> getPrediction() async {
-    return await Future.delayed(const Duration(seconds: 5), () {
-      return PredictionModel(
-          hasAnemia: "50", para1: "30", para2: "20", para3: "10");
-    });
+    final url = Uri.parse("http://10.0.2.2:5000/predict_file");
+    final req = http.MultipartRequest(
+      'POST',
+      url,
+    );
+    final originalName = widget.imageFile.path.split('/').last;
+    final file = http.MultipartFile.fromBytes(
+      "file",
+      await File.fromUri(Uri.parse(widget.imageFile.path)).readAsBytes(),
+      filename: originalName,
+    );
+    req.files.add(file);
+    final response = await req.send();
+    if (response.statusCode == 200) {
+      final res = json.decode(await response.stream.bytesToString());
+      print("Success");
+      print(res);
+    } else {
+      print("Failed");
+    }
+    return PredictionModel(
+        hasAnemia: "50", para1: "30", para2: "20", para3: "10");
+    // return await Future.delayed(const Duration(seconds: 5), () {
+    // });
   }
 
   @override
