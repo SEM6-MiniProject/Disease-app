@@ -27,7 +27,7 @@ class ConfirmImagePage extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Image.file(imageFile),
+          Expanded(child: Image.file(imageFile)),
           SizedBox(
             height: 30,
           ),

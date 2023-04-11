@@ -10,4 +10,13 @@ class PredictionModel {
     required this.para2,
     required this.para3,
   });
+
+  factory PredictionModel.fromJson(Map<String, dynamic> json) {
+    return PredictionModel(
+      hasAnemia: json['hasAnemia'],
+      para1: json['para1'] ?? "0",
+      para2: json['para2'] ?? "0",
+      para3: json['para3'] ?? "0",
+    );
+  }
 }

@@ -38,6 +38,7 @@ class _PredictionPageState extends State<PredictionPage> {
       final res = json.decode(await response.stream.bytesToString());
       print("Success");
       print(res);
+      return PredictionModel.fromJson(res);
     } else {
       print("Failed");
     }
