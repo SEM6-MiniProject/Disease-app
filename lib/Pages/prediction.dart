@@ -21,7 +21,7 @@ class _PredictionPageState extends State<PredictionPage> {
   Future<PredictionModel> getPrediction() async {
     print("Getting Prediction");
     final url =
-        Uri.parse("https://animea-prediction.onrender.com/predict_file");
+        Uri.parse("https://animea-prediction-docker.onrender.com/predict_file");
     // final url = Uri.parse(
     //     "https://ae1c-2405-201-1c-d0eb-1d5c-2acf-5991-795d.ngrok-free.app/predict_file");
     final req = http.MultipartRequest(
