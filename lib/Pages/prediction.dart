@@ -20,7 +20,10 @@ class PredictionPage extends StatefulWidget {
 class _PredictionPageState extends State<PredictionPage> {
   Future<PredictionModel> getPrediction() async {
     print("Getting Prediction");
-    final url = Uri.parse("https://animea-prediction.onrender.com/predict_file");
+    final url =
+        Uri.parse("https://animea-prediction.onrender.com/predict_file");
+    // final url = Uri.parse(
+    //     "https://ae1c-2405-201-1c-d0eb-1d5c-2acf-5991-795d.ngrok-free.app/predict_file");
     final req = http.MultipartRequest(
       'POST',
       url,
@@ -43,7 +46,7 @@ class _PredictionPageState extends State<PredictionPage> {
       print("Failed");
     }
     return PredictionModel(
-        hasAnemia: "50", para1: "30", para2: "20", para3: "10");
+        prediction: 1, data: {"para1": 1, "para2": 2, "para3": 3});
     // return await Future.delayed(const Duration(seconds: 5), () {
     // });
   }
@@ -60,6 +63,7 @@ class _PredictionPageState extends State<PredictionPage> {
           if (snapshot.hasData) {
             return screen(snapshot.data!);
           } else if (snapshot.hasError) {
+            print(snapshot.error);
             return errorScreen();
           } else {
             return loadingScreen();
@@ -87,12 +91,22 @@ class _PredictionPageState extends State<PredictionPage> {
           height: 20,
         ),
         Text(
-          "Has Anemia: ${pred.hasAnemia} %",
+          "Has Anemia: ${pred.prediction == 1 ? "Yes" : "No"} ",
           style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        Text("Para 1: ${pred.para1}"),
-        Text("Para 2: ${pred.para2}"),
-        Text("Para 3: ${pred.para3}"),
+        const SizedBox(
+          height: 20,
+        ),
+        for (var key in pred.data.keys)
+          if (key == 'gender')
+            Text("Gender : ${pred.data[key] == 1 ? "Male" : "Female"}",
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold))
+          else
+            Text(
+              "$key: ${pred.data[key]}",
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
       ],
     );
   }
