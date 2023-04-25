@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_const_constructors
-
-import 'package:diseaseapp/Pages/prediction.dart';
 import 'package:diseaseapp/Pages/uploadImage.dart';
 import 'package:flutter/material.dart';
+
+import 'input.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -29,27 +29,7 @@ class _HomePageState extends State<HomePage> {
         },
         child: const Icon(Icons.add),
       ),
-      body: prevReports.isEmpty
-          ? noPrevReports()
-          : Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text("There are reports"),
-              ],
-            ),
-    );
-  }
-
-  Center noPrevReports() {
-    return Center(
-      child: Text(
-        "No Previous Reports Yet",
-        style: TextStyle(
-          color: Colors.grey,
-          fontSize: 22,
-        ),
-      ),
+      body: InputPage(),
     );
   }
 }

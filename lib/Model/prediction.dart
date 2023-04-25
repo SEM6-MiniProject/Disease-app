@@ -1,22 +1,38 @@
 class PredictionModel {
   final String hasAnemia;
-  final String para1;
-  final String para2;
-  final String para3;
+  final String hemoglobin;
+  final String gender;
+  final String MCH;
+  final String MCHC;
+  final String MCV;
 
   PredictionModel({
     required this.hasAnemia,
-    required this.para1,
-    required this.para2,
-    required this.para3,
+    required this.hemoglobin,
+    required this.gender,
+    required this.MCH,
+    required this.MCHC,
+    required this.MCV,
   });
 
   factory PredictionModel.fromJson(Map<String, dynamic> json) {
     return PredictionModel(
-      hasAnemia: json['hasAnemia'],
-      para1: json['para1'] ?? "0",
-      para2: json['para2'] ?? "0",
-      para3: json['para3'] ?? "0",
+      hasAnemia: json['hasAnemia'] ?? "0.5",
+      gender: json['gender'] == 1 ? "Male" : "Female",
+      hemoglobin: json['Hemoglobin'] ?? "0",
+      MCH: json['MCH'] ?? "0",
+      MCHC: json['MCHC'] ?? "0",
+      MCV: json['MCV'] ?? "0",
     );
+  }
+
+  Map<String, String> toJson(){
+    return {
+      "Hemoglobin": hemoglobin,
+      "MCH": MCH,
+      "MCHC": MCHC,
+      "MCV": MCV,
+      "Gender":gender =="Male"? "1":"0"
+    };
   }
 }

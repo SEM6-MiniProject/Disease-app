@@ -8,6 +8,7 @@ import 'package:http_parser/http_parser.dart';
 
 class PredictionPage extends StatefulWidget {
   final File imageFile;
+
   const PredictionPage({
     super.key,
     required this.imageFile,
@@ -20,7 +21,8 @@ class PredictionPage extends StatefulWidget {
 class _PredictionPageState extends State<PredictionPage> {
   Future<PredictionModel> getPrediction() async {
     print("Getting Prediction");
-    final url = Uri.parse("https://animea-prediction.onrender.com/predict_file");
+    final url =
+        Uri.parse("https://animea-prediction.onrender.com/predict_file");
     final req = http.MultipartRequest(
       'POST',
       url,
@@ -43,7 +45,13 @@ class _PredictionPageState extends State<PredictionPage> {
       print("Failed");
     }
     return PredictionModel(
-        hasAnemia: "50", para1: "30", para2: "20", para3: "10");
+      hasAnemia: "50",
+      hemoglobin: "30",
+      MCH: "20",
+      MCHC: "10",
+      gender: "Male",
+      MCV: "20",
+    );
     // return await Future.delayed(const Duration(seconds: 5), () {
     // });
   }
@@ -87,12 +95,28 @@ class _PredictionPageState extends State<PredictionPage> {
           height: 20,
         ),
         Text(
-          "Has Anemia: ${pred.hasAnemia} %",
+          "Has Anemia: ${pred.hasAnemia}",
           style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        Text("Para 1: ${pred.para1}"),
-        Text("Para 2: ${pred.para2}"),
-        Text("Para 3: ${pred.para3}"),
+        SizedBox(
+          height: 20,
+        ),
+        Text(
+          "Hemoglobin: ${pred.hemoglobin}",
+          style: TextStyle(fontSize: 20),
+        ),
+        Text(
+          "MCH: ${pred.MCH}",
+          style: TextStyle(fontSize: 20),
+        ),
+        Text(
+          "MCHC: ${pred.MCHC}",
+          style: TextStyle(fontSize: 20),
+        ),
+        Text(
+          "MCV: ${pred.MCV}",
+          style: TextStyle(fontSize: 20),
+        ),
       ],
     );
   }
