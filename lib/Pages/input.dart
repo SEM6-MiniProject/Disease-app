@@ -106,13 +106,14 @@ class _InputPageState extends State<InputPage> {
                     MaterialPageRoute(
                         builder: (context) => InputPredictionPage(
                               inputs: PredictionModel(
-                                MCH: _mchccontroller.text,
-                                MCHC: _mchccontroller.text,
-                                MCV: _mcvcontroller.text,
-                                hemoglobin: _hemocontroller.text,
-                                gender:
-                                    _gendercontroller == 1 ? "Male" : "Female",
-                                hasAnemia: "0.5",
+                                prediction: 1,
+                                data: {
+                                  "Hemoglobin": _hemocontroller.text,
+                                  "MCV": _mcvcontroller,
+                                  "MCH": _mchcontroller,
+                                  "MCHC": _mchccontroller,
+                                  "Gender": _gendercontroller.toString(),
+                                },
                               ),
                             )));
               },

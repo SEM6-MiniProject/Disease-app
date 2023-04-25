@@ -39,12 +39,11 @@ class _InputPredictionPageState extends State<InputPredictionPage> {
       print("Failed");
     }
     return PredictionModel(
-        hasAnemia: "50",
-        hemoglobin: "30",
-        MCH: "20",
-        MCHC: "10",
-        gender: "Male",
-        MCV: "20");
+      prediction: 1,
+      data: {
+        "MCV": "100",
+      },
+    );
     // return await Future.delayed(const Duration(seconds: 5), () {
     // });
   }
@@ -84,28 +83,19 @@ class _InputPredictionPageState extends State<InputPredictionPage> {
             height: 70,
           ),
           Text(
-            "Has Anemia: ${pred.hasAnemia}",
+            "Has Anemia: ${pred.prediction == 1 ? "Yes" : "No"}",
             style: const TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
           ),
-          SizedBox(
-            height: 20,
-          ),
-          Text(
-            "Hemoglobin: ${widget.inputs.hemoglobin}",
-            style: TextStyle(fontSize: 20),
-          ),
-          Text(
-            "MCH: ${widget.inputs.MCH}",
-            style: TextStyle(fontSize: 20),
-          ),
-          Text(
-            "MCHC: ${widget.inputs.MCHC}",
-            style: TextStyle(fontSize: 20),
-          ),
-          Text(
-            "MCV: ${widget.inputs.MCV}",
-            style: TextStyle(fontSize: 20),
-          ),
+          for (var key in pred.data.keys)
+          if (key == 'gender')
+            Text("Gender : ${pred.data[key] == 1 ? "Male" : "Female"}",
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold))
+          else
+            Text(
+              "$key: ${pred.data[key]}",
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
         ],
       ),
     );
