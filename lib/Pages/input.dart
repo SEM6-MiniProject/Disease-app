@@ -109,9 +109,9 @@ class _InputPageState extends State<InputPage> {
                                 prediction: 1,
                                 data: {
                                   "Hemoglobin": _hemocontroller.text,
-                                  "MCV": _mcvcontroller,
-                                  "MCH": _mchcontroller,
-                                  "MCHC": _mchccontroller,
+                                  "MCV": _mcvcontroller.text,
+                                  "MCH": _mchcontroller.text,
+                                  "MCHC": _mchccontroller.text,
                                   "Gender": _gendercontroller.toString(),
                                 },
                               ),

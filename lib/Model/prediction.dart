@@ -12,7 +12,7 @@ class PredictionModel {
   factory PredictionModel.fromJson(Map<String, dynamic> json) {
     return PredictionModel(
       prediction: json['prediction'],
-      data: json['data'],
+      data: json['data'] ?? {},
     );
   }
 
