@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 class PredictionModel {
   final int prediction;
   final Map<String, dynamic> data;

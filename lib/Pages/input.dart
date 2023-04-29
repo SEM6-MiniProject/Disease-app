@@ -15,6 +15,17 @@ class _InputPageState extends State<InputPage> {
   late TextEditingController _mchcontroller;
   late TextEditingController _mchccontroller;
   late TextEditingController _mcvcontroller;
+  final _focusNode1 = FocusNode();
+  final _focusNode2 = FocusNode();
+  final _focusNode3 = FocusNode();
+  final _focusNode4 = FocusNode();
+
+  void unfocus() {
+    _focusNode1.unfocus();
+    _focusNode2.unfocus();
+    _focusNode3.unfocus();
+    _focusNode4.unfocus();
+  }
 
   @override
   void initState() {
@@ -89,10 +100,10 @@ class _InputPageState extends State<InputPage> {
                 ],
               ),
             ),
-            myTextField(_hemocontroller, 'Hemoglobin'),
-            myTextField(_mchcontroller, 'MCH'),
-            myTextField(_mchccontroller, 'MCHC'),
-            myTextField(_mcvcontroller, 'MCV'),
+            myTextField(_hemocontroller, 'Hemoglobin', _focusNode1),
+            myTextField(_mchcontroller, 'MCH', _focusNode2),
+            myTextField(_mchccontroller, 'MCHC', _focusNode3),
+            myTextField(_mcvcontroller, 'MCV', done: true, _focusNode4),
             SizedBox(height: 50),
             ElevatedButton(
               style: ButtonStyle(
@@ -101,6 +112,7 @@ class _InputPageState extends State<InputPage> {
                 backgroundColor: MaterialStateProperty.all(Colors.blueAccent),
               ),
               onPressed: () {
+                unfocus();
                 Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -125,11 +137,14 @@ class _InputPageState extends State<InputPage> {
     );
   }
 
-  Widget myTextField(TextEditingController controller, String hint,
+  Widget myTextField(
+      TextEditingController controller, String hint, FocusNode focusnode,
       {bool done = false}) {
     return Padding(
       padding: const EdgeInsets.all(12.0),
       child: TextFormField(
+        focusNode: focusnode,
+        keyboardType: TextInputType.number,
         textInputAction: done ? TextInputAction.done : TextInputAction.next,
         controller: controller,
         decoration: InputDecoration(

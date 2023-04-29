@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:diseaseapp/Model/prediction.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http_parser/http_parser.dart';
 
 class PredictionPage extends StatefulWidget {
@@ -38,16 +39,18 @@ class _PredictionPageState extends State<PredictionPage> {
     final response = await req.send();
     if (response.statusCode == 200) {
       final res = json.decode(await response.stream.bytesToString());
+      Fluttertoast.showToast(msg: "Success");
       print("Success");
       print(res);
       return PredictionModel.fromJson(res);
     } else {
+      Fluttertoast.showToast(msg: "API Failed", backgroundColor: Colors.red);
       print("Failed");
     }
     return PredictionModel(
       prediction: 1,
       data: {
-        "MCV":"100",
+        "MCV": "100",
       },
     );
     // return await Future.delayed(const Duration(seconds: 5), () {
